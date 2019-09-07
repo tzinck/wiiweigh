@@ -1,5 +1,5 @@
 # wiiweigh
-Use your Wii balance board as a scale, working with auto-reconnect on a raspberry pi 3, using bluez 5, xwiimote and some python.
+Use your Wii balance board as a scale, working with auto-reconnect on a raspberry pi 4, using bluez 5, xwiimote and some python.
 
 ## about
 This is essentially a mashup of existing projects in a try to get a connection and data from the Wii Balance Board without having to resync (red button) on each connection with newer bluez versions. After the non-recurring syncronization you can connect the board by a single push of its button, step on the board, wait for a stable average weight and step off, the board disconnects and turns of, ready for the next connection.
@@ -41,11 +41,11 @@ git clone https://github.com/dvdhrm/xwiimote.git
 git clone https://github.com/dvdhrm/xwiimote-bindings.git
 git clone https://github.com/chaosbiber/wiiweigh.git
 cd xwiimote
-./autogen.sh
+./autogen.sh --prefix=/usr
 make
 sudo make install
 cd ../xwiimote-bindings
-./autogen.sh
+./autogen.sh --prefix=/usr
 make
 sudo make install
 cd ../wiiweigh
@@ -56,6 +56,17 @@ sudo gpasswd -a pi bluetooth # add user pi to bluetooth group
 sudo bluetoothctl
 # continue with bluetooth setup below
 ```
+
+Before the next step, I also did:
+
+```
+sudo apt-get install libbluetooth-dev
+sudo apt-get install python-dev
+sudo pip install PyBluez
+sudo pip3 install PyBluez
+```
+
+Not sure if this is necessary, but you might as well do it too just in case. Additionally, I had to reboot the Pi a few times throughout.
 
 The following procedure should only be required once, the sync survives host reboots. Just try if after the disconnect command you can connect by simply pushing the front button of the board, if not, delete the pairing and try again. The hid_wiimote module lights the blue led of the button when loaded, when it's not the led keeps blinking.
 
