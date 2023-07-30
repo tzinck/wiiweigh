@@ -103,7 +103,7 @@ def average_mesurements(ms, max_stddev=30):
 	counter = 0;
 
 	while True:
-		weight = sum(ms.next())
+		weight = sum(next(ms))
 
 		last_measurements.append(weight)
 
@@ -124,7 +124,7 @@ def find_device_address():
 	objects = om.GetManagedObjects()
 
 	# find FIRST registered or connected Wii Balance Board ("RVL-WBC-01") and return address
-	for path, interfaces in objects.iteritems():
+	for path, interfaces in objects.items():
 		if "org.bluez.Device1" not in interfaces:
 			continue
 		properties = interfaces["org.bluez.Device1"]
@@ -146,11 +146,18 @@ def connect_balanceboard():
 
 	(kg, err) = average_mesurements(measurements(iface))
 
+	lbs = kg * 2.20462
+	lbserr = err * 2.20462
+
 	#
 	# do something with this data
 	# like log to file or send to server
 	#
 	print("{:.2f} +/- {:.2f}".format(kg/100.0, err/100.0))
+
+	f = open(weight.txt)
+	f.write("{:.2f} +/- {:.2f}".format(lbs/100.0, lbserr/100.0) + "{:.2f} +/- {:.2f}".format(kg/100, err / 100))
+	f.close()
 
 	# find address of the balance board (once) and disconnect (if found).
 	if bbaddress is None:
@@ -161,7 +168,7 @@ def connect_balanceboard():
 
 def property_changed(interface, changed, invalidated, path):
 	iface = interface[interface.rfind(".") + 1:]
-	for name, value in changed.iteritems():
+	for name, value in changed.items():
 		val = str(value)
 		print("{%s.PropertyChanged} [%s] %s = %s" % (iface, path, name, val))
 		# check if property "Connected" changed to "1". Does NOT check which device has connected, we only assume it was the balance board
