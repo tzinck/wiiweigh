@@ -1,0 +1,12 @@
+<script src="/socket.io/socket.io.js"></script>
+
+<title>Scale</title>
+<div id="weight" style="display:flex;align-items:center;justify-content:center;height:100%;width:100%;font-size:500%;"></div>
+
+<script>
+    let socket = io();
+
+    socket.on('weight', function(weight) {
+        document.getElementById("weight").innerHTML = weight;
+    });
+</script>
