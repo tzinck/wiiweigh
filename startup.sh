@@ -1,4 +1,5 @@
+touch weight.txt
 nohup python3 wiiweigh.py &
 nohup node index.js weight.txt &
-cp nginx-scale.conf /usr/share/nginx/
-nginx reload -c nginx-scale.conf
+sudo cp nginx-scale.conf /usr/share/nginx/
+sudo nginx -s reload -c nginx-scale.conf
