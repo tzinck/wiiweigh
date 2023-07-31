@@ -1,2 +1,2 @@
 nohup python3 wiiweigh.py &
-nohup node index.js ../wiiweigh/weight.txt &
+nohup node index.js weight.txt &
