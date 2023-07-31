@@ -103,6 +103,7 @@ def average_mesurements(ms, max_stddev=30):
 	counter = 0;
 
 	while True:
+		print("looping")
 		weight = sum(next(ms))
 
 		last_measurements.append(weight)
