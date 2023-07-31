@@ -140,11 +140,17 @@ def connect_balanceboard():
 	#device is something like "/sys/devices/platform/soc/3f201000.uart/tty/ttyAMA0/hci0/hci0:11/0005:057E:0306.000C"
 	device = wait_for_balanceboard()
 
+	print("connected to balance board")
+
 	iface = xwiimote.iface(device)
 	iface.open(xwiimote.IFACE_BALANCE_BOARD)
 
+	print("ready")
+
 
 	(kg, err) = average_mesurements(measurements(iface))
+
+	print("done measuring")
 
 	lbs = kg * 2.20462
 	lbserr = err * 2.20462
