@@ -106,6 +106,8 @@ def average_mesurements(ms, max_stddev=30):
 		print("looping")
 		weight = sum(next(ms))
 
+		print("got a weight")
+
 		last_measurements.append(weight)
 
 		mean = numpy.mean(last_measurements.data)
