@@ -52,7 +52,7 @@ class RingBuffer():
         return self.data[idx]
 
     def reset(self):
-        self.data = numpy.zeros(self.length, dtype=numpy.int)
+        self.data = numpy.zeros(self.length, dtype=int)
         self.index = 0
 
 def dev_is_balanceboard(dev):
@@ -164,9 +164,8 @@ def connect_balanceboard():
 	#
 	print("{:.2f} +/- {:.2f}".format(kg/100.0, err/100.0))
 
-	f = open(weight.txt)
-	f.write("{:.2f} +/- {:.2f}".format(lbs/100.0, lbserr/100.0) + "{:.2f} +/- {:.2f}".format(kg/100, err / 100))
-	f.close()
+	with open("weight.txt", "w") as f:
+		f.write("{:.2f} +/- {:.2f} lbs ({:.2f} +/- {:.2f} kg)".format(lbs/100.0, lbserr/100.0, kg/100.0, err/100.0))
 
 	# find address of the balance board (once) and disconnect (if found).
 	if bbaddress is None:
